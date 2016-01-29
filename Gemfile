@@ -21,9 +21,14 @@ gem 'active_model_serializers'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :test do
+  #Behaviour testes
   gem 'rspec-rails', '~> 2.14'
+  #Model mocks
   gem 'factory_girl_rails'
+  #Random data generator
   gem 'ffaker'
+  #Validation
+  gem 'shoulda-matchers'
 end
 
 group :development, :test do
