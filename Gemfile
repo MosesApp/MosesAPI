@@ -16,13 +16,15 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 #API views
 gem 'active_model_serializers'
+#Request response
+gem 'responders'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :test do
   #Behaviour testes
-  gem 'rspec-rails', '~> 2.14'
+  gem 'rspec-rails'
   #Model mocks
   gem 'factory_girl_rails'
   #Random data generator
