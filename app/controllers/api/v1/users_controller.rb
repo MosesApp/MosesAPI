@@ -2,6 +2,8 @@ class Api::V1::UsersController < ApplicationController
   respond_to :json
   def show
     respond_with User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: "user not found" }, status: 422
   end
 
   def create
@@ -21,6 +23,16 @@ class Api::V1::UsersController < ApplicationController
     else
       render json: { errors: user.errors }, status: 422
     end
+
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: "user not found" }, status: 422
+  end
+
+  def destroy
+    User.find(params[:id]).try(:destroy)
+    head 204
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: "user not found" }, status: 422
   end
 
   private
