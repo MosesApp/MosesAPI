@@ -4,6 +4,6 @@ class Group < ActiveRecord::Base
                     styles: { small: "50x50", med: "140x140", large: "200x200" }
   validates_attachment_content_type :image,
           :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
-  validates :name, :creator, :status, presence: true
+  validates :name, :creator_id, :status, presence: true
 
 end

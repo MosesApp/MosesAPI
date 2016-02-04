@@ -9,32 +9,35 @@ describe Api::V1::UsersController do
         get :show, id: @user.id
       end
 
-      it "returns the information about a reporter on a hash" do
+      it "returns the user information" do
         user_response = json_response
         expect(user_response[:email]).to eql @user.email
+        expect(user_response[:first_name]).to eql @user.first_name
+        expect(user_response[:full_name]).to eql @user.full_name
+        expect(user_response[:facebook_id]).to eql @user.facebook_id
+        expect(user_response[:timezone]).to eql @user.timezone
+        expect(user_response[:locale]).to eql @user.locale
       end
 
       it { should respond_with 200 }
     end
 
     context "when user does not exist" do
-      context "when user does no exist" do
-        before(:each) do
-          get :show, id: 111
-        end
-
-        it "renders an errors json" do
-          user_response = json_response
-          expect(user_response).to have_key(:errors)
-        end
-
-        it "renders the json errors on why the user could not be created" do
-          user_response = json_response
-          expect(user_response[:errors]).to include "user not found"
-        end
-
-        it { should respond_with 422 }
+      before(:each) do
+        get :show, id: 111
       end
+
+      it "renders an errors json" do
+        user_response = json_response
+        expect(user_response).to have_key(:errors)
+      end
+
+      it "renders the json errors on why the group could not be shown" do
+        user_response = json_response
+        expect(user_response[:errors]).to include "user not found"
+      end
+
+      it { should respond_with 422 }
     end
 
   end
@@ -50,6 +53,11 @@ describe Api::V1::UsersController do
       it "renders the json representation for the user record just created" do
         user_response = json_response
         expect(user_response[:email]).to eql @user_attributes[:email]
+        expect(user_response[:first_name]).to eql @user_attributes[:first_name]
+        expect(user_response[:full_name]).to eql @user_attributes[:full_name]
+        expect(user_response[:facebook_id]).to eql @user_attributes[:facebook_id]
+        expect(user_response[:locale]).to eql @user_attributes[:locale]
+        expect(user_response[:timezone]).to eql @user_attributes[:timezone]
       end
 
       it { should respond_with 201 }

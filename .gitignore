@@ -16,6 +16,9 @@
 !/log/.keep
 /tmp
 
+# Images do here
+/public/system
+
 # Extra files to ignore
 doc/
 *.swp
