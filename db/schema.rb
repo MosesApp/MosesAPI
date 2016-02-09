@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20160204223132) do
     t.string   "first_name"
     t.string   "full_name"
     t.string   "email"
-    t.string   "facebook_id"
+    t.string   "facebook_id", index: {name: "fk__users_facebook_id"}, foreign_key: {references: "facebooks", name: "fk_users_facebook_id", on_update: :no_action, on_delete: :no_action}
     t.string   "locale"
     t.integer  "timezone"
     t.datetime "created_at",  null: false

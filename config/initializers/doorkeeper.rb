@@ -5,6 +5,7 @@ Doorkeeper.configure do
   orm :active_record
 
   resource_owner_from_assertion do
+    print params.inspect
     facebook_helper = FacebookHelper.new(params[:token])
     if facebook_helper.valid_token?
       user_data = facebook_helper.user_data

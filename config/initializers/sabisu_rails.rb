@@ -9,7 +9,7 @@ SabisuRails.setup do |config|
   # config.ignored_attributes = %w{ created_at updated_at id }
 
   # HTTP methods
-  # config.http_methods = %w{ GET POST PUT DELETE PATCH }
+  config.http_methods = %w{ GET POST PUT DELETE }
 
   # Headers to include on each request
   config.api_headers = {'Accept' => 'application/vnd.mosesapi.v1'}

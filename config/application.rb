@@ -44,5 +44,10 @@ module MosesAPI
     end
 
     config.autoload_paths += %W(\#{config.root}/lib)
+
+    #Remove auth from sabisu
+    config.to_prepare do
+      SabisuRails::BaseController.skip_before_filter :authenticate
+    end
   end
 end
