@@ -24,3 +24,6 @@ doc/
 *.swp
 *~
 .DS_Store
+
+#Byebug
+.byebug_history

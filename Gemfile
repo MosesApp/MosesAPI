@@ -26,7 +26,10 @@ gem 'simple_form'
 #Images
 gem 'paperclip'
 #Model creation
-gem "schema_plus"
+gem 'schema_plus'
+#Authentication
+gem 'doorkeeper'
+gem 'doorkeeper-grants_assertion', github: "doorkeeper-gem/doorkeeper-grants_assertion"
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc

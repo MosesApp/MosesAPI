@@ -1,6 +1,7 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
+  use_doorkeeper
   mount SabisuRails::Engine => "/"
   namespace :api, defaults: { format: :json },
                         constraints: { subdomain: 'api' }, path: '/' do
