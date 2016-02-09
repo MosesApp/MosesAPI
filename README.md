@@ -1,4 +1,40 @@
-## MosesAPI
+# MosesAPI
+
+## Installation
+
+### Domain
+Using **Pow** for OSX or **Pax** for GNU/Linux.
+
+#### Pow (for OSX)
+
+```
+$ curl get.pow.cx | sh
+$ cd ~/.pow
+$ ln -s ~/workspace/MosesAPI
+```
+
+#### Pax (for linux)
+
+```
+$ sudo git clone git://github.com/ysbaddaden/prax.git /opt/prax
+
+$ cd /opt/prax/
+$ ./bin/prax install  
+$ cd ~/workspace/MosesAPI
+$ prax link
+
+$ prax start
+```
+[Reference](http://apionrails.icalialabs.com/book/chapter_one#sec-pow_prax)
+
+#### ImageMagick
+Used by PaperClip gem.
+
+```
+brew install imagemagick
+```
+
+## API
 
 #### OAuth
 Authenticate using Facebook token.
@@ -10,8 +46,8 @@ POST   | /oauth/token/               | Get authentication token
 
 Parameters:
 ```
-    grant_type: assertion
-    token: <facebook token>
+grant_type: assertion
+token: <facebook token>
 ```
 
 Response example:
