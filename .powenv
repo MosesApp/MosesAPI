@@ -6,3 +6,4 @@ export IRBRC='/Users/thiago/.rvm/rubies/ruby-2.3.0/.irbrc'
 unset MAGLEV_HOME
 unset RBXOPT
 export RUBY_VERSION='ruby-2.3.0'
+export RUBY_DEBUG_PORT=3001

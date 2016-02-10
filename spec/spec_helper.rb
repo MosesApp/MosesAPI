@@ -60,6 +60,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   #Resquest test helper
+  config.include ApiControllerHelper
   config.include Request::JsonHelpers, :type => :controller
   config.include Request::HeadersHelpers, :type => :controller
   config.before(:each, type: :controller) do

@@ -1,14 +1,15 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :doorkeeper_authorize!
   respond_to :json
+
   def show
-    respond_with User.find(params[:id])
+    respond_with current_user
   rescue ActiveRecord::RecordNotFound
     render json: { errors: "user not found" }, status: 422
   end
 
   def update
-    user = User.find(params[:id])
-
+    user = current_user
     if user.update(user_params)
       render json: user, status: 200, location: [:api, user]
     else
@@ -20,7 +21,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).try(:destroy)
+    current_user.try(:destroy)
     head 204
   rescue ActiveRecord::RecordNotFound
     render json: { errors: "user not found" }, status: 422

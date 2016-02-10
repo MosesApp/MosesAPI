@@ -37,17 +37,6 @@ ActiveRecord::Schema.define(version: 20160204223132) do
     t.datetime "updated_at",         null: false
   end
 
-  create_table "oauth_access_grants", force: :cascade do |t|
-    t.integer  "users_id",       null: false, index: {name: "fk__oauth_access_grants_users_id"}, foreign_key: {references: "users", name: "fk_oauth_access_grants_users_id", on_update: :no_action, on_delete: :no_action}
-    t.integer  "application_id", null: false, index: {name: "fk__oauth_access_grants_application_id"}, foreign_key: {references: "applications", name: "fk_oauth_access_grants_application_id", on_update: :no_action, on_delete: :no_action}
-    t.string   "token",          null: false, index: {name: "index_oauth_access_grants_on_token", unique: true}
-    t.integer  "expires_in",     null: false
-    t.text     "redirect_uri",   null: false
-    t.datetime "created_at",     null: false
-    t.datetime "revoked_at"
-    t.string   "scopes"
-  end
-
   create_table "oauth_access_tokens", force: :cascade do |t|
     t.integer  "resource_owner_id", index: {name: "fk__oauth_access_tokens_resource_owner_id"}, foreign_key: {references: "resource_owners", name: "fk_oauth_access_tokens_resource_owner_id", on_update: :no_action, on_delete: :no_action}
     t.integer  "application_id",    index: {name: "fk__oauth_access_tokens_application_id"}, foreign_key: {references: "applications", name: "fk_oauth_access_tokens_application_id", on_update: :no_action, on_delete: :no_action}

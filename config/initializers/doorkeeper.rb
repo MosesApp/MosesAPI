@@ -5,18 +5,18 @@ Doorkeeper.configure do
   orm :active_record
 
   resource_owner_from_assertion do
-    print params.inspect
     facebook_helper = FacebookHelper.new(params[:token])
+
+    user = nil
     if facebook_helper.valid_token?
       user_data = facebook_helper.user_data
-      begin
-        User.find_by(facebook_id: user_data['id'])
-      rescue ActiveRecord::RecordNotFound
-        User.new(user_data)
-      end
-    else
-      nil
+      user = User.find_by(facebook_id: user_data['id'])
     end
+
+    if (defined? user_data) != nil
+      user ||= User.new(user_data)
+    end
+    user
   end
 
   grant_flows %w(assertion)

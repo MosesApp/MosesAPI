@@ -59,6 +59,11 @@ Response example:
   "created_at": 1455051683
 }
 ```
+All subsequent call will be authenticated by the Authorization header:
+
+```
+Authorization: Bearer 09da8218e7f3ed0bbc3aa53586fd0221333f68510b5290b1ffe4e10dd11ea5d7
+```
 
 #### Users
 Get, edit or remove an user.

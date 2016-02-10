@@ -18,8 +18,8 @@ SabisuRails.setup do |config|
   # config.layout = "sabisu"
 
   # Resources on the api
-  config.resources = [:users, :groups]
-  config.default_resource = :users
+  config.resources = [:user, :groups]
+  config.default_resource = :user
 
   # Application name
   # mattr_accessor :app_name

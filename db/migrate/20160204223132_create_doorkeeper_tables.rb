@@ -11,19 +11,6 @@ class CreateDoorkeeperTables < ActiveRecord::Migration
 
     add_index :oauth_applications, :uid, unique: true
 
-    create_table :oauth_access_grants do |t|
-      t.references :users, foreign_key: true, null: false
-      t.integer  :application_id,    null: false
-      t.string   :token,             null: false
-      t.integer  :expires_in,        null: false
-      t.text     :redirect_uri,      null: false
-      t.datetime :created_at,        null: false
-      t.datetime :revoked_at
-      t.string   :scopes
-    end
-
-    add_index :oauth_access_grants, :token, unique: true
-
     create_table :oauth_access_tokens do |t|
       t.integer  :resource_owner_id
       t.integer  :application_id
