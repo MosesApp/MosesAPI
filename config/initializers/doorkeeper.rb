@@ -7,14 +7,12 @@ Doorkeeper.configure do
   resource_owner_from_assertion do
     facebook_helper = FacebookHelper.new(params[:token])
 
-    user = nil
     if facebook_helper.valid_token?
       user_data = facebook_helper.user_data
       user = User.find_by(facebook_id: user_data['id'])
-    end
-
-    if (defined? user_data) != nil
-      user ||= User.new(user_data)
+      if user == nil
+        user = User.create(user_data)
+      end
     end
     user
   end
