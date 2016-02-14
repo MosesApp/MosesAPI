@@ -18,23 +18,28 @@ ActiveRecord::Schema.define(version: 20160204223132) do
     t.string   "first_name"
     t.string   "full_name"
     t.string   "email"
-    t.string   "facebook_id", index: {name: "fk__users_facebook_id"}, foreign_key: {references: "facebooks", name: "fk_users_facebook_id", on_update: :no_action, on_delete: :no_action}
+    t.string   "facebook_id",         index: {name: "fk__users_facebook_id"}, foreign_key: {references: "facebooks", name: "fk_users_facebook_id", on_update: :no_action, on_delete: :no_action}
     t.string   "locale"
     t.integer  "timezone"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "facebook_token"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "groups", force: :cascade do |t|
     t.string   "name"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.integer  "creator_id",         index: {name: "fk__groups_creator_id"}, foreign_key: {references: "users", name: "fk_groups_creator_id", on_update: :no_action, on_delete: :no_action}
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.integer  "creator_id",          index: {name: "fk__groups_creator_id"}, foreign_key: {references: "users", name: "fk_groups_creator_id", on_update: :no_action, on_delete: :no_action}
     t.string   "status"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "oauth_access_tokens", force: :cascade do |t|

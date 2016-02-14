@@ -2,7 +2,7 @@ class CreateGroups < ActiveRecord::Migration
   def change
     create_table :groups do |t|
       t.string :name
-      t.attachment :image
+      t.attachment :avatar
       t.integer :creator_id, references: :users
       t.string :status
 

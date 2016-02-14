@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe User do
-  before { @user = FactoryGirl.build(:user) }
+  before { @user = FactoryGirl.build(:user, :model) }
 
   subject { @user }
 
@@ -12,6 +12,9 @@ describe User do
   it { should respond_to(:facebook_id) }
   it { should respond_to(:locale) }
   it { should respond_to(:timezone) }
+  it { should respond_to(:avatar) }
+  it { should respond_to(:facebook_token) }
+
 
   it { should be_valid }
 

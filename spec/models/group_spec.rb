@@ -6,7 +6,7 @@ describe Group do
 
   #Model
   it { should respond_to(:name) }
-  it { should respond_to(:image) }
+  it { should respond_to(:avatar) }
   it { should respond_to(:creator) }
   it { should respond_to(:status) }
 

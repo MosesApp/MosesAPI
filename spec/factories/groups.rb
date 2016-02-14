@@ -5,12 +5,12 @@ FactoryGirl.define do
     association :creator, factory: :user
 
     trait :model do
-      image File.new(Rails.root + 'spec/factories/images/enimearecusandae.png')
+      avatar File.new(Rails.root + 'spec/factories/images/enimearecusandae.png')
     end
 
     trait :controller do
       creator_id 1
-      image "data:image/png;base64," + Base64.encode64(
+      avatar "data:image/png;base64," + Base64.encode64(
         File.new(Rails.root + 'spec/factories/images/enimearecusandae.png').read )
     end
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Api::V1::UsersController do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user, :controller) }
   let(:token) { double acceptable?: true }
 
   describe "GET #show" do
@@ -19,6 +19,7 @@ describe Api::V1::UsersController do
         expect(user_response[:first_name]).to eql user.first_name
         expect(user_response[:full_name]).to eql user.full_name
         expect(user_response[:facebook_id]).to eql user.facebook_id
+        expect(user_response[:facebook_token]).to eql user.facebook_token
         expect(user_response[:timezone]).to eql user.timezone
         expect(user_response[:locale]).to eql user.locale
       end
@@ -47,6 +48,7 @@ describe Api::V1::UsersController do
         expect(user_response[:first_name]).to eql @new_user[:first_name]
         expect(user_response[:full_name]).to eql @new_user[:full_name]
         expect(user_response[:facebook_id]).to eql @new_user[:facebook_id]
+        expect(user_response[:facebook_token]).to eql @new_user[:facebook_token]
         expect(user_response[:locale]).to eql @new_user[:locale]
         expect(user_response[:timezone]).to eql @new_user[:timezone]
 
@@ -87,6 +89,6 @@ describe Api::V1::UsersController do
 
       it { should respond_with 204 }
     end
-    
+
   end
 end

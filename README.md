@@ -34,6 +34,15 @@ Used by PaperClip gem.
 brew install imagemagick
 ```
 
+#### Export environment variables
+
+Set the Facebook variables.
+```
+export FACEBOOK_APP_ID=<facebook_app_id>
+export FACEBOOK_APP_SECRET=<facebook_app_secreat>
+```
+
+
 ## API
 
 #### OAuth

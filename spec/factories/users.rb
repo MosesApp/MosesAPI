@@ -6,5 +6,14 @@ FactoryGirl.define do
     facebook_id "100000035613868"
     locale "en_US"
     timezone 1
+
+    trait :model do
+      avatar File.new(Rails.root + 'spec/factories/images/enimearecusandae.png')
+    end
+
+    trait :controller do
+      avatar "data:image/png;base64," + Base64.encode64(
+        File.new(Rails.root + 'spec/factories/images/enimearecusandae.png').read )
+    end
   end
 end

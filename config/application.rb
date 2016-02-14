@@ -49,5 +49,9 @@ module MosesAPI
     config.to_prepare do
       SabisuRails::BaseController.skip_before_filter :authenticate
     end
+
+    #Facebook setup
+    config.fb_app_id = ENV['FACEBOOK_APP_ID']
+    config.fb_app_secret = ENV['FACEBOOK_APP_SECRET']
   end
 end
