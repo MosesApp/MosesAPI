@@ -1,18 +1,57 @@
 require 'spec_helper'
 
 describe Api::V1::GroupsController do
-  describe "GET #show" do
-    context "when successfully gets a group" do
+  let(:user) { FactoryGirl.create(:user_with_groups, :controller) }
+  let(:token) { double acceptable?: true }
+
+  describe "GET #index" do
+    context "when successfully authenticated" do
       before(:each) do
-        @group = FactoryGirl.create :group
-        get :show, id: @group.id
+        stub_access_token(token)
+        stub_current_user(user)
+        get :index
+      end
+
+      it "returns the user's groups" do
+        group_response = json_response
+        expect(group_response[:groups].size).to eql user.groups.size
       end
 
       it "returns the group information" do
         group_response = json_response
-        expect(group_response[:name]).to eql @group.name
-        expect(group_response[:creator_id]).to eql @group.creator[:id]
-        expect(group_response[:status]).to eql @group.status
+
+        group_response[:groups].each_with_index do |group, index|
+          expect(group[:name]).to eql user.groups[index].name
+          expect(group[:creator_id]).to eql user.groups[index].creator[:id]
+          expect(group[:status]).to eql user.groups[index].status
+        end
+      end
+
+      it { should respond_with 200 }
+    end
+
+    context "when user not authenticated" do
+      before(:each) do
+        get :index
+      end
+
+      it { should respond_with 401 }
+    end
+  end
+
+  describe "GET #show" do
+    context "when successfully gets a group" do
+      before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
+        get :show, id: user.groups[1].id
+      end
+
+      it "returns the group information" do
+        group_response = json_response
+        expect(group_response[:name]).to eql user.groups[1].name
+        expect(group_response[:creator_id]).to eql user.groups[1].creator[:id]
+        expect(group_response[:status]).to eql user.groups[1].status
 
       end
 
@@ -21,7 +60,9 @@ describe Api::V1::GroupsController do
 
     context "when group does no exist" do
       before(:each) do
-        get :show, id: 111
+        stub_access_token(token)
+        stub_current_user(user)
+        get :show, id: 12345
       end
 
       it "renders an errors json" do
@@ -36,11 +77,21 @@ describe Api::V1::GroupsController do
 
       it { should respond_with 422 }
     end
+
+    context "when user not authenticated" do
+      before(:each) do
+        get :show, id: 1
+      end
+
+      it { should respond_with 401 }
+    end
   end
 
   describe "POST #create" do
     context "when is successfully created" do
       before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
         @group_attributes = FactoryGirl.attributes_for :group, :controller
         post :create, { group: @group_attributes }
       end
@@ -49,7 +100,7 @@ describe Api::V1::GroupsController do
         group_response = json_response
         expect(group_response[:name]).to eql @group_attributes[:name]
         expect(group_response[:status]).to eql @group_attributes[:status]
-        expect(group_response[:creator_id]).to eql @group_attributes[:creator_id]
+        expect(group_response[:creator_id]).to eql user.id
       end
 
       it { should respond_with 201 }
@@ -57,7 +108,9 @@ describe Api::V1::GroupsController do
 
     context "when is missing attribute" do
       before(:each) do
-        @invalid_group_attributes = {name: '', status: '', creator_id: ''}
+        stub_access_token(token)
+        stub_current_user(user)
+        @invalid_group_attributes = {name: '', status: ''}
         post :create, { group: @invalid_group_attributes }
       end
 
@@ -69,13 +122,19 @@ describe Api::V1::GroupsController do
       it "renders the json errors on why the group could not be created" do
         group_response = json_response
         expect(group_response[:errors][:name]).to include "can't be blank"
-        expect(group_response[:errors][:creator_id]).to include "can't be blank"
         expect(group_response[:errors][:status]).to include "can't be blank"
       end
 
       it { should respond_with 422 }
     end
 
-  end
+    context "when user not authenticated" do
+      before(:each) do
+        post :create
+      end
 
+      it { should respond_with 401 }
+    end
+
+  end
 end

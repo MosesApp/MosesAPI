@@ -9,8 +9,9 @@ describe Group do
   it { should respond_to(:avatar) }
   it { should respond_to(:creator) }
   it { should respond_to(:status) }
+  it { should respond_to(:users) }
 
-  it { should belong_to(:creator)}
+  it { should belong_to(:creator) }
 
   it { should be_valid }
 

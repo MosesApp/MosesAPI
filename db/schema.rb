@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204223132) do
+ActiveRecord::Schema.define(version: 20160214223428) do
 
   PRAGMA FOREIGN_KEYS = ON;
   create_table "users", force: :cascade do |t|
@@ -40,6 +40,14 @@ ActiveRecord::Schema.define(version: 20160204223132) do
     t.string   "status"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+  end
+
+  create_table "group_users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean  "is_admin"
+    t.integer  "user_id",    index: {name: "index_group_users_on_user_id"}, foreign_key: {references: "users", name: "fk_group_users_user_id", on_update: :no_action, on_delete: :no_action}
+    t.integer  "group_id",   index: {name: "index_group_users_on_group_id"}, foreign_key: {references: "groups", name: "fk_group_users_group_id", on_update: :no_action, on_delete: :no_action}
   end
 
   create_table "oauth_access_tokens", force: :cascade do |t|

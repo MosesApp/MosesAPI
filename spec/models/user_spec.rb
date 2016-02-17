@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe User do
-  before { @user = FactoryGirl.build(:user, :model) }
+  before { @user = FactoryGirl.create(:user, :model) }
 
   subject { @user }
 
@@ -14,9 +14,11 @@ describe User do
   it { should respond_to(:timezone) }
   it { should respond_to(:avatar) }
   it { should respond_to(:facebook_token) }
+  it { should respond_to(:groups) }
 
 
   it { should be_valid }
+
 
   #Validation
   it { should validate_presence_of(:first_name) }

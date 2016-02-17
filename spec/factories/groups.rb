@@ -14,5 +14,15 @@ FactoryGirl.define do
         File.new(Rails.root + 'spec/factories/images/enimearecusandae.png').read )
     end
 
+    factory :group_with_users do
+      transient do
+        user_count 3
+      end
+
+      after(:create) do |group, evaluator|
+        create_list(:group_user, evaluator.user_count, group: group)
+      end
+    end
+
   end
 end

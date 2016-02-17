@@ -9,6 +9,9 @@ class FacebookHelper
     facebook = URI.parse("https://graph.facebook.com/app?" +
                             "access_token=#{@token}")
     response = Net::HTTP.get_response(facebook)
+
+    Rails.logger.debug response.body.inspect
+
     app_data = JSON.parse(response.body)
     app_data['id'] == @app_id
   end
@@ -18,6 +21,9 @@ class FacebookHelper
                             "fields=first_name,timezone,name,email,locale" +
                             "&access_token=#{@token}")
     response = Net::HTTP.get_response(facebook)
+
+    Rails.logger.debug response.body.inspect
+
     user = JSON.parse(response.body)
     #Convert to our model
     user['full_name'] = user.delete 'name'
@@ -33,6 +39,9 @@ class FacebookHelper
                             "&client_secret=#{Rails.configuration.fb_app_secret}" +
                             "&fb_exchange_token=#{@token}")
     response = Net::HTTP.get_response(facebook)
+
+    Rails.logger.debug response.body.inspect
+
     token = JSON.parse(response.body)
     token['access_token']
   end

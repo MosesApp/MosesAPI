@@ -103,4 +103,34 @@ Create, get, edit or remove group.
 
 Method |          Endpoint           | Description
 -------|-----------------------------|-------------
+GET    | /group/                     | Gets all authenticated user's groups
 GET    | /group/<group_id>           | Gets the group
+POST   | /group/                     | Creates the group
+
+GET /group/ response example
+```json
+{
+"groups":[
+    {
+      "id": 1,
+      "name": "New",
+      "creator_id": 1,
+      "status": "Active",
+      "created_at": "2016-02-18T00:22:20.420Z",
+      "updated_at": "2016-02-18T00:22:20.420Z"
+    }
+  ]
+}
+```
+
+GET /group/1 response example
+```json
+{
+  "id": 1,
+  "name": "New",
+  "creator_id": 1,
+  "status": "Active",
+  "created_at": "2016-02-18T00:22:20.420Z",
+  "updated_at": "2016-02-18T00:22:20.420Z"
+}
+```

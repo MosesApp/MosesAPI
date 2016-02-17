@@ -27,6 +27,13 @@ describe Api::V1::UsersController do
       it { should respond_with 200 }
     end
 
+    context "when user not authenticated" do
+      before(:each) do
+        get :show
+      end
+
+      it { should respond_with 401 }
+    end
   end
 
   describe "PUT/PATCH #update" do
@@ -77,6 +84,14 @@ describe Api::V1::UsersController do
       it { should respond_with 422 }
     end
 
+    context "when user not authenticated" do
+      before(:each) do
+        get :show
+      end
+
+      it { should respond_with 401 }
+    end
+
   end
 
   describe "DELETE #destroy" do
@@ -88,6 +103,14 @@ describe Api::V1::UsersController do
       end
 
       it { should respond_with 204 }
+    end
+
+    context "when user not authenticated" do
+      before(:each) do
+        get :show
+      end
+
+      it { should respond_with 401 }
     end
 
   end

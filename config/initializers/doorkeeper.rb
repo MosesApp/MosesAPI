@@ -9,7 +9,7 @@ Doorkeeper.configure do
 
     if facebook_helper.valid_token?
       user_data = facebook_helper.user_data
-      user = User.find_by(facebook_id: user_data['id'])
+      user = User.find_by(facebook_id: user_data['facebook_id'])
       if user == nil
         user = User.create(user_data)
       end
