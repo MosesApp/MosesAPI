@@ -106,6 +106,48 @@ describe Api::V1::GroupsController do
       it { should respond_with 201 }
     end
 
+    context "when is successfully created with group members" do
+      before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
+        @group_attributes = FactoryGirl.attributes_for :group, :controller do | group |
+          #Add group members
+          friend = FactoryGirl.create :user
+          group[:members] = [{id: user.id, is_admin: true}, {id: friend.id, is_admin: false}]
+        end
+        post :create, { group: @group_attributes }
+      end
+
+      it "renders the json representation for the group with members" do
+        group_response = json_response
+        expect(group_response[:name]).to eql @group_attributes[:name]
+        expect(group_response[:status]).to eql @group_attributes[:status]
+        expect(group_response[:creator_id]).to eql user.id
+      end
+
+      it { should respond_with 201 }
+    end
+
+    context "when is has invalid group member" do
+      before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
+        @group_attributes = FactoryGirl.attributes_for :group, :controller
+        #Add group members
+        @group_attributes[:members] = [{id: user.id, is_admin: true},
+                                              {id: 12345, is_admin: false}]
+        post :create, { group: @group_attributes }
+      end
+
+      it "renders an errors json" do
+        group_response = json_response
+        expect(group_response).to have_key(:errors)
+      end
+
+      it { should respond_with 422 }
+    end
+
+
     context "when is missing attribute" do
       before(:each) do
         stub_access_token(token)

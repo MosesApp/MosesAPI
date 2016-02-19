@@ -12,4 +12,22 @@ class Group < ActiveRecord::Base
   validates :name, :creator_id, :status, presence: true
   validates_attachment_content_type :avatar,
           :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+
+  ##
+  # Finds group by ID, restricting results to groups
+  # that the current_user is part of.
+  def find(id)
+    Group.includes([:users, :group_users]).where(id: id,
+                                      group_users: { user: current_user } ).first
+  end
+
+  ##
+  # Add members to group
+  def add_members(members)
+    members.each do | member |
+      GroupUser.create!(group_id: self.id, user_id: member[:id],
+                                            is_admin: member[:is_admin])
+    end
+  end
+
 end

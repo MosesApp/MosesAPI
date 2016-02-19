@@ -134,3 +134,19 @@ GET /group/1 response example
   "updated_at": "2016-02-18T00:22:20.420Z"
 }
 ```
+
+POST /group request example
+```json
+{
+  "id": 1,
+  "name": "New",
+  "creator_id": 1,
+  "status": "Active",
+  "created_at": "2016-02-18T00:22:20.420Z",
+  "updated_at": "2016-02-18T00:22:20.420Z",
+  "members":[
+    {"id":"1", "is_admin":true},
+    {"id":"4", "is_admin":false}
+  ]
+}
+```
