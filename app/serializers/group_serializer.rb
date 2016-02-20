@@ -15,7 +15,7 @@ class GroupSerializer < ActiveModel::Serializer
   def admins
     admins = []
     for group_user in object.group_users
-      admins << {"member_id": group_user.id} if group_user.is_admin
+      admins << {"member_id": group_user.user_id} if group_user.is_admin
     end
     admins
   end

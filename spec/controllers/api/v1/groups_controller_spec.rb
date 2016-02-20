@@ -124,6 +124,7 @@ describe Api::V1::GroupsController do
         expect(group_response[:creator][:id]).to eql user.id
         expect(group_response[:members].size).to eql 2
         expect(group_response[:admins].size).to eql 1
+        expect(group_response[:admins][0][:member_id]).to eql user.id
       end
 
       it { should respond_with 201 }

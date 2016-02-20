@@ -27,3 +27,6 @@ doc/
 
 #Byebug
 .byebug_history
+
+#Pow
+.powenv

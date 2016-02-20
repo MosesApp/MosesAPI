@@ -11,7 +11,7 @@ Doorkeeper.configure do
       user_data = facebook_helper.user_data
       user = User.find_by(facebook_id: user_data['facebook_id'])
       if user == nil
-        user = User.create(user_data)
+        user = User.create!(user_data)
       end
     end
     user

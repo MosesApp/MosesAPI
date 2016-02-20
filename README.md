@@ -41,6 +41,7 @@ Set the Facebook variables.
 export FACEBOOK_APP_ID=<facebook_app_id>
 export FACEBOOK_APP_SECRET=<facebook_app_secreat>
 ```
+If using POW, you have to add the exports to .powenv file.
 
 
 ## API
@@ -124,6 +125,11 @@ GET /group/1 response example
   "id": 1,
   "name": "New",
   "status": "Active",
+  "admins": [
+    {
+      "member_id": 3
+    }
+  ],
   "creator": {
     "id": 3,
     "first_name": "Carlos",
@@ -152,31 +158,27 @@ GET /group/1 response example
       "locale": "en_US",
       "timezone": 1
     }
-  ],
-  "admins": [
-    {
-      "member_id": 3
-    }
   ]
 }
 ```
 
 POST /group request example
 ```json
-{
-  "id": 1,
-  "name": "New",
-  "creator_id": 1,
-  "status": "Active",
-  "members":[
+{ "group":
     {
-      "id":"1",
-      "is_admin":true
-    },
-    {
-      "id":"4",
-      "is_admin":false
+      "name": "New",
+      "creator_id": 1,
+      "status": "Active",
+      "members":[
+        {
+          "id":"1",
+          "is_admin":true
+        },
+        {
+          "id":"4",
+          "is_admin":false
+        }
+      ]
     }
-  ]
 }
 ```

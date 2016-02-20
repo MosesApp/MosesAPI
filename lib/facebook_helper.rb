@@ -38,11 +38,16 @@ class FacebookHelper
                             "&client_id=#{Rails.configuration.fb_app_id}" +
                             "&client_secret=#{Rails.configuration.fb_app_secret}" +
                             "&fb_exchange_token=#{@token}")
+
     response = Net::HTTP.get_response(facebook)
 
     Rails.logger.debug response.body.inspect
 
     token = JSON.parse(response.body)
-    token['access_token']
+    if token['access_token'].present?
+      token['access_token']
+    else
+      @token
+    end
   end
 end
