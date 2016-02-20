@@ -11,9 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160214223428) do
+ActiveRecord::Schema.define(version: 20160220142721) do
 
   PRAGMA FOREIGN_KEYS = ON;
+  create_table "currencies", force: :cascade do |t|
+    t.string   "prefix"
+    t.string   "code"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "full_name"
@@ -40,6 +48,20 @@ ActiveRecord::Schema.define(version: 20160214223428) do
     t.string   "status"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+  end
+
+  create_table "bills", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "receipt_file_name"
+    t.string   "receipt_content_type"
+    t.integer  "receipt_file_size"
+    t.datetime "receipt_updated_at"
+    t.integer  "group_id",             index: {name: "index_bills_on_group_id"}, foreign_key: {references: "groups", name: "fk_bills_group_id", on_update: :no_action, on_delete: :no_action}
+    t.float    "amount"
+    t.integer  "currency_id",          index: {name: "fk__bills_currency_id"}, foreign_key: {references: "currencies", name: "fk_bills_currency_id", on_update: :no_action, on_delete: :no_action}
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "group_users", force: :cascade do |t|

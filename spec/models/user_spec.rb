@@ -14,7 +14,8 @@ describe User do
   it { should respond_to(:timezone) }
   it { should respond_to(:avatar) }
   it { should respond_to(:facebook_token) }
-  it { should respond_to(:groups) }
+
+  it { should have_many(:groups) }
 
 
   it { should be_valid }

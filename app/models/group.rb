@@ -10,8 +10,6 @@ class Group < ActiveRecord::Base
   validates_attachment_content_type :avatar,
           :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
   validates :name, :creator_id, :status, presence: true
-  validates_attachment_content_type :avatar,
-          :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 
   ##
   # Finds group by ID, restricting results to groups
@@ -23,7 +21,7 @@ class Group < ActiveRecord::Base
 
   ##
   # Add members to group
-  def add_members(members)    
+  def add_members(members)
     members.each do | member |
       GroupUser.create!(group_id: self.id, user_id: member[:id],
                                             is_admin: member[:is_admin])
