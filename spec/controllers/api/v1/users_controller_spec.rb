@@ -107,7 +107,7 @@ describe Api::V1::UsersController do
 
     context "when user not authenticated" do
       before(:each) do
-        get :show
+        delete :destroy
       end
 
       it { should respond_with 401 }

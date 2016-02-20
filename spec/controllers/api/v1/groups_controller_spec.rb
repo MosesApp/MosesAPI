@@ -180,5 +180,26 @@ describe Api::V1::GroupsController do
       it { should respond_with 401 }
     end
 
+    describe "DELETE #destroy" do
+      context "when user exists" do
+        before(:each) do
+          stub_access_token(token)
+          stub_current_user(user)
+          delete :destroy, id: user.groups[1].id
+        end
+
+        it { should respond_with 204 }
+      end
+
+      context "when user not authenticated" do
+        before(:each) do
+          delete :destroy, id: user.groups[1].id
+        end
+
+        it { should respond_with 401 }
+      end
+
+    end
+
   end
 end

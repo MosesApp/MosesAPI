@@ -20,6 +20,13 @@ class Api::V1::GroupsController < ApplicationController
       render json: { errors: invalid.record.errors }, status: 422
   end
 
+  def destroy
+    Group.find(params[:id]).try(:destroy)
+    head 204
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: "user not found" }, status: 422
+  end
+
   private
 
     def group_params
