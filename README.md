@@ -92,9 +92,7 @@ GET response example:
    "email": "dev@example.com",
    "facebook_id": "21788553421335852",
    "locale": "pt_BR",
-   "timezone": -2,
-   "created_at": "2016-02-09T18:52:29.181Z",
-   "updated_at": "2016-02-09T18:52:29.181Z"
+   "timezone": -2
 }
 ```
 
@@ -114,10 +112,7 @@ GET /group/ response example
     {
       "id": 1,
       "name": "New",
-      "creator_id": 1,
       "status": "Active",
-      "created_at": "2016-02-18T00:22:20.420Z",
-      "updated_at": "2016-02-18T00:22:20.420Z"
     }
   ]
 }
@@ -128,10 +123,41 @@ GET /group/1 response example
 {
   "id": 1,
   "name": "New",
-  "creator_id": 1,
   "status": "Active",
-  "created_at": "2016-02-18T00:22:20.420Z",
-  "updated_at": "2016-02-18T00:22:20.420Z"
+  "creator": {
+    "id": 3,
+    "first_name": "Carlos",
+    "full_name": "Carlos Moses",
+    "email": "dev@example.com",
+    "facebook_id": "21788553421335852",
+    "locale": "pt_BR",
+    "timezone": -2  
+  },
+  "members":[
+    {
+      "id": 3,
+      "first_name": "Carlos",
+      "full_name": "Carlos Moses",
+      "email": "dev@example.com",
+      "facebook_id": "21788553421335852",
+      "locale": "pt_BR",
+      "timezone": -2  
+    },
+    {
+      "id": 1,
+      "first_name": "Meta",
+      "full_name": "Hattie Orn I",
+      "email": "dagmar_schmeler@koch.biz",
+      "facebook_id": "100001252336714",
+      "locale": "en_US",
+      "timezone": 1
+    }
+  ],
+  "admins": [
+    {
+      "member_id": 3
+    }
+  ]
 }
 ```
 
@@ -142,11 +168,15 @@ POST /group request example
   "name": "New",
   "creator_id": 1,
   "status": "Active",
-  "created_at": "2016-02-18T00:22:20.420Z",
-  "updated_at": "2016-02-18T00:22:20.420Z",
   "members":[
-    {"id":"1", "is_admin":true},
-    {"id":"4", "is_admin":false}
+    {
+      "id":"1",
+      "is_admin":true
+    },
+    {
+      "id":"4",
+      "is_admin":false
+    }
   ]
 }
 ```

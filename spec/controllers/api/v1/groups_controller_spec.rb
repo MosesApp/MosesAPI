@@ -22,7 +22,6 @@ describe Api::V1::GroupsController do
 
         group_response[:groups].each_with_index do |group, index|
           expect(group[:name]).to eql user.groups[index].name
-          expect(group[:creator_id]).to eql user.groups[index].creator[:id]
           expect(group[:status]).to eql user.groups[index].status
         end
       end
@@ -50,7 +49,7 @@ describe Api::V1::GroupsController do
       it "returns the group information" do
         group_response = json_response
         expect(group_response[:name]).to eql user.groups[1].name
-        expect(group_response[:creator_id]).to eql user.groups[1].creator[:id]
+        expect(group_response[:creator][:id]).to eql user.groups[1].creator[:id]
         expect(group_response[:status]).to eql user.groups[1].status
 
       end
@@ -100,7 +99,7 @@ describe Api::V1::GroupsController do
         group_response = json_response
         expect(group_response[:name]).to eql @group_attributes[:name]
         expect(group_response[:status]).to eql @group_attributes[:status]
-        expect(group_response[:creator_id]).to eql user.id
+        expect(group_response[:creator][:id]).to eql user.id
       end
 
       it { should respond_with 201 }
@@ -122,7 +121,9 @@ describe Api::V1::GroupsController do
         group_response = json_response
         expect(group_response[:name]).to eql @group_attributes[:name]
         expect(group_response[:status]).to eql @group_attributes[:status]
-        expect(group_response[:creator_id]).to eql user.id
+        expect(group_response[:creator][:id]).to eql user.id
+        expect(group_response[:members].size).to eql 2
+        expect(group_response[:admins].size).to eql 1
       end
 
       it { should respond_with 201 }

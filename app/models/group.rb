@@ -2,7 +2,7 @@ class Group < ActiveRecord::Base
   #Associations
   belongs_to :creator, class_name: "User"
   has_many :group_users
-  has_many :users, through: :group_users
+  has_many :members, through: :group_users, source: :user
   has_attached_file :avatar,
                     styles: { small: "50x50", med: "140x140", large: "200x200" }
 
@@ -17,8 +17,8 @@ class Group < ActiveRecord::Base
   # Finds group by ID, restricting results to groups
   # that the current_user is part of.
   def find(id)
-    Group.includes([:users, :group_users]).where(id: id,
-                                      group_users: { user: current_user } ).first
+    Group.includes([:members, :group_users]).where(id: id,
+                                    group_users: { user: current_user } ).first
   end
 
   ##

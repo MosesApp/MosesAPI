@@ -7,7 +7,7 @@ class Api::V1::GroupsController < ApplicationController
   end
 
   def show
-      respond_with Group.find(params[:id])
+      respond_with Group.find(params[:id]), show_users: true
   rescue ActiveRecord::RecordNotFound
       render json: { errors: "group not found" }, status: 422
   end
@@ -15,7 +15,7 @@ class Api::V1::GroupsController < ApplicationController
   def create
     group = Group.create!(group_params)
     group.add_members(members_params) if members_params.present?
-    render json: group, status: 201, location: [:api, group]
+    render json: group, status: 201, location: [:api, group], show_users: true
   rescue ActiveRecord::RecordInvalid => invalid
       render json: { errors: invalid.record.errors }, status: 422
   end
