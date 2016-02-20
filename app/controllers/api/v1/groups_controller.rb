@@ -7,9 +7,12 @@ class Api::V1::GroupsController < ApplicationController
   end
 
   def show
-      respond_with Group.find(params[:id]), show_users: true
-  rescue ActiveRecord::RecordNotFound
+    group = Group.find(params[:id], current_user)
+    if group != nil
+      respond_with group, show_users: true
+    else
       render json: { errors: "group not found" }, status: 422
+    end
   end
 
   def create
@@ -21,7 +24,7 @@ class Api::V1::GroupsController < ApplicationController
   end
 
   def destroy
-    Group.find(params[:id]).try(:destroy)
+    Group.find(params[:id], current_user).try(:destroy)
     head 204
   rescue ActiveRecord::RecordNotFound
     render json: { errors: "user not found" }, status: 422
