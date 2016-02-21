@@ -182,6 +182,55 @@ describe Api::V1::GroupsController do
     end
   end
 
+  describe "PUT/PATCH #update" do
+
+    context "when is successfully updated group info" do
+      before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
+        @update_group = { name: "Updated name", status: "New Status" }
+        patch :update, { id: user.groups[0].id, group: @update_group }
+      end
+
+      it "renders the json representation for the updated user" do
+        group_response = json_response
+        expect(group_response[:name]).to eql @update_group[:name]
+        expect(group_response[:status]).to eql @update_group[:status]
+      end
+
+      it { should respond_with 200 }
+    end
+
+    context "when group does not exist" do
+      before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
+        patch :update, id: 12345
+      end
+
+      it "renders an errors json" do
+        user_response = json_response
+        expect(user_response).to have_key(:errors)
+      end
+
+      it "renders the json errors on why the group could not be shown" do
+        user_response = json_response
+        expect(user_response[:errors]).to include "group not found"
+      end
+
+      it { should respond_with 422 }
+    end
+
+    context "when user not authenticated" do
+      before(:each) do
+        patch :update, id: 1
+      end
+
+      it { should respond_with 401 }
+    end
+
+  end
+
   describe "DELETE #destroy" do
     context "when group exists and user is admin" do
       before(:each) do

@@ -42,22 +42,22 @@ describe Api::V1::UsersController do
       before(:each) do
         stub_access_token(token)
         stub_current_user(user)
-        @new_user = { email: "new@email.com",
+        @update_user = { email: "new@email.com",
                               first_name: "New", full_name: "New Name",
                               facebook_id: "12011022", locale: 'pt_BR',
                               timezone: 2 }
-        patch :update, { user: @new_user }
+        patch :update, { user: @update_user }
       end
 
       it "renders the json representation for the updated user" do
         user_response = json_response
-        expect(user_response[:email]).to eql @new_user[:email]
-        expect(user_response[:first_name]).to eql @new_user[:first_name]
-        expect(user_response[:full_name]).to eql @new_user[:full_name]
-        expect(user_response[:facebook_id]).to eql @new_user[:facebook_id]
-        expect(user_response[:facebook_token]).to eql @new_user[:facebook_token]
-        expect(user_response[:locale]).to eql @new_user[:locale]
-        expect(user_response[:timezone]).to eql @new_user[:timezone]
+        expect(user_response[:email]).to eql @update_user[:email]
+        expect(user_response[:first_name]).to eql @update_user[:first_name]
+        expect(user_response[:full_name]).to eql @update_user[:full_name]
+        expect(user_response[:facebook_id]).to eql @update_user[:facebook_id]
+        expect(user_response[:facebook_token]).to eql @update_user[:facebook_token]
+        expect(user_response[:locale]).to eql @update_user[:locale]
+        expect(user_response[:timezone]).to eql @update_user[:timezone]
 
       end
 
@@ -86,7 +86,7 @@ describe Api::V1::UsersController do
 
     context "when user not authenticated" do
       before(:each) do
-        get :show
+        patch :update
       end
 
       it { should respond_with 401 }

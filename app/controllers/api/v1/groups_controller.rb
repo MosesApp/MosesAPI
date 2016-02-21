@@ -23,6 +23,17 @@ class Api::V1::GroupsController < ApplicationController
       render json: { errors: invalid.record.errors }, status: 422
   end
 
+  def update
+    group = Group.find(params[:id], current_user)
+    if group == nil
+      render json: { errors: "group not found" }, status: 422
+    elsif group.update(group_params)
+      render json: group, status: 200, location: [:api, group], show_users: true
+    else
+      render json: { errors: group.errors }, status: 422
+    end
+  end
+
   def destroy
     group = Group.find(params[:id], current_user)
     if group == nil
