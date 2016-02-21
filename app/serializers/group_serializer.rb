@@ -6,7 +6,7 @@ class GroupSerializer < ActiveModel::Serializer
 
   def filter(keys)
     if !serialization_options[:show_users]
-      keys - [:creator, :members]
+      keys - [:creator, :members, :admins]
     else
       keys
     end

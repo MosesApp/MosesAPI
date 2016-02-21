@@ -57,7 +57,7 @@ describe Api::V1::GroupsController do
       it { should respond_with 200 }
     end
 
-    context "when group does no exist" do
+    context "when group does not exist" do
       before(:each) do
         stub_access_token(token)
         stub_current_user(user)
@@ -179,26 +179,65 @@ describe Api::V1::GroupsController do
 
       it { should respond_with 401 }
     end
+  end
 
-    describe "DELETE #destroy" do
-      context "when user exists" do
-        before(:each) do
-          stub_access_token(token)
-          stub_current_user(user)
-          delete :destroy, id: user.groups[1].id
-        end
+  describe "DELETE #destroy" do
+    context "when group exists and user is admin" do
+      before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
+        #Make sure user is admin
+        group_user = user.groups[1].group_users[0]
+        group_user.is_admin = true
+        group_user.save
 
-        it { should respond_with 204 }
+        delete :destroy, id: user.groups[1].id
       end
 
-      context "when user not authenticated" do
-        before(:each) do
-          delete :destroy, id: user.groups[1].id
-        end
+      it { should respond_with 204 }
+    end
 
-        it { should respond_with 401 }
+    context "when group exists but user is not admin" do
+      before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
+        #Make sure user isn't admin
+        group_user = user.groups[1].group_users[0]
+        group_user.is_admin = false
+        group_user.save
+
+        delete :destroy, id: user.groups[1].id
       end
 
+      it "renders an errors json" do
+        group_response = json_response
+        expect(group_response).to have_key(:errors)
+      end
+
+      it { should respond_with 422 }
+    end
+
+    context "when group doesn't exist" do
+      before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
+        delete :destroy, id: 123245
+      end
+
+      it "renders an errors json" do
+        group_response = json_response
+        expect(group_response).to have_key(:errors)
+      end
+
+      it { should respond_with 422 }
+    end
+
+    context "when user not authenticated" do
+      before(:each) do
+        delete :destroy, id: user.groups[1].id
+      end
+
+      it { should respond_with 401 }
     end
 
   end

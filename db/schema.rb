@@ -58,8 +58,9 @@ ActiveRecord::Schema.define(version: 20160220142721) do
     t.integer  "receipt_file_size"
     t.datetime "receipt_updated_at"
     t.integer  "group_id",             index: {name: "index_bills_on_group_id"}, foreign_key: {references: "groups", name: "fk_bills_group_id", on_update: :no_action, on_delete: :no_action}
+    t.integer  "currency_id",          index: {name: "index_bills_on_currency_id"}, foreign_key: {references: "currencies", name: "fk_bills_currency_id", on_update: :no_action, on_delete: :no_action}
+    t.integer  "creator_id",           index: {name: "fk__bills_creator_id"}, foreign_key: {references: "users", name: "fk_bills_creator_id", on_update: :no_action, on_delete: :no_action}
     t.float    "amount"
-    t.integer  "currency_id",          index: {name: "fk__bills_currency_id"}, foreign_key: {references: "currencies", name: "fk_bills_currency_id", on_update: :no_action, on_delete: :no_action}
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end

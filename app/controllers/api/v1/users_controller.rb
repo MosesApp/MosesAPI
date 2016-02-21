@@ -15,7 +15,6 @@ class Api::V1::UsersController < ApplicationController
     else
       render json: { errors: user.errors }, status: 422
     end
-
   rescue ActiveRecord::RecordNotFound
     render json: { errors: "user not found" }, status: 422
   end

@@ -24,10 +24,15 @@ class Api::V1::GroupsController < ApplicationController
   end
 
   def destroy
-    Group.find(params[:id], current_user).try(:destroy)
-    head 204
-  rescue ActiveRecord::RecordNotFound
-    render json: { errors: "user not found" }, status: 422
+    group = Group.find(params[:id], current_user)
+    if group == nil
+      render json: { errors: "group not found" }, status: 422
+    elsif GroupUser.where(group: group, user: current_user).first.is_admin
+      group.try(:destroy)
+      head 204
+    else
+      render json: { errors: "not allowed" }, status: 422
+    end
   end
 
   private

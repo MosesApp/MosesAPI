@@ -12,6 +12,7 @@ describe Bill do
 
   it { should belong_to(:group) }
   it { should belong_to(:currency) }
+  it { should belong_to(:creator) }
 
   it { should be_valid }
 
@@ -20,5 +21,6 @@ describe Bill do
   it { should validate_presence_of(:group) }
   it { should validate_presence_of(:currency) }
   it { should validate_presence_of(:amount) }
+  it { should validate_presence_of(:creator_id) }
 
 end

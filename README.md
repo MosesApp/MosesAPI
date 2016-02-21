@@ -102,11 +102,12 @@ Create, get, edit or remove group.
 
 Method |          Endpoint           | Description
 -------|-----------------------------|-------------
-GET    | /group/                     | Gets all authenticated user's groups
-GET    | /group/<group_id>           | Gets the group
-POST   | /group/                     | Creates the group
+GET    | /groups/                    | Gets all authenticated user's groups
+GET    | /groups/<group_id>          | Gets the group's details
+POST   | /groups/                    | Creates the group
+DELETE | /groups/                    | Deletes the group if user is admin
 
-GET /group/ response example
+GET /groups response example
 ```json
 {
 "groups":[
@@ -119,7 +120,7 @@ GET /group/ response example
 }
 ```
 
-GET /group/1 response example
+GET /groups/1 response example
 ```json
 {
   "id": 1,
@@ -162,7 +163,7 @@ GET /group/1 response example
 }
 ```
 
-POST /group request example
+POST /groups request example
 ```json
 { "group":
     {
@@ -179,6 +180,54 @@ POST /group request example
           "is_admin":false
         }
       ]
+    }
+}
+```
+
+#### Bills
+Create, get, edit or remove bill.
+
+Method |          Endpoint           | Description
+-------|-----------------------------|-------------
+GET    | /bills/                     | Gets all authenticated user's bills
+GET    | /bills/<group_id>           | Gets the bill's details
+
+GET /bills/ response example
+```json
+{
+  "bills":[
+    {
+      "id": 1,
+      "name": "dreamcatcher",
+      "amount": 11.73,
+      "created_at": "2016-02-21T00:49:57.367Z",
+      "currency":
+        {
+          "prefix": "$"
+        }
+    }
+  ]
+}
+```
+
+GET /bill/1 response example
+```json
+{
+  "id": 1,
+  "name": "stumptown",
+  "description": "Wolf whatever locavore synth messenger bag American Apparel art stumptown.",
+  "amount": 96.48,
+  "created_at": "2016-02-21T00:49:58.037Z",
+  "currency":
+    {
+      "prefix": "$"
+    },
+  "group":
+    {
+      "id":1,
+      "name":"Portland",
+      "avatar":"/avatars/original/missing.png",
+      "status":"Active"
     }
 }
 ```

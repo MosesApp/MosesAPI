@@ -5,6 +5,7 @@ FactoryGirl.define do
     amount { rand() * 100 + 1 }
     association :group
     association :currency
+    association :creator, factory: :user
 
     trait :model do
       receipt File.new(Rails.root + 'spec/factories/images/enimearecusandae.png')

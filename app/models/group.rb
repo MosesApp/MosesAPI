@@ -15,7 +15,7 @@ class Group < ActiveRecord::Base
   # Finds group by ID, restricting results to groups
   # that the current_user is part of.
   def self.find(id, current_user)
-    Group.includes([:members, :group_users]).where(id: id,
+    Group.includes(:group_users).where(id: id,
                                     group_users: { user: current_user } ).first
   end
 
