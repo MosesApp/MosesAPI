@@ -112,7 +112,8 @@ describe Api::V1::GroupsController do
         @group_attributes = FactoryGirl.attributes_for :group, :controller do | group |
           #Add group members
           friend = FactoryGirl.create :user
-          group[:members] = [{id: user.id, is_admin: true}, {id: friend.id, is_admin: false}]
+          group[:members] = [{id: user.id, is_admin: true},
+                                              {id: friend.id, is_admin: false}]
         end
         post :create, { group: @group_attributes }
       end

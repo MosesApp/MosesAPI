@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Bill do
-  before { @bill = FactoryGirl.build(:bill, :model) }
+  before { @bill = FactoryGirl.create(:bill, :model) }
   subject { @bill }
 
   #Model

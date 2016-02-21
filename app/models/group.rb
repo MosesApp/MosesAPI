@@ -23,9 +23,11 @@ class Group < ActiveRecord::Base
   # Add members to group
   def add_members(members)
     members.each do | member |
-      GroupUser.create!(group_id: self.id, user_id: member[:id],
-                                            is_admin: member[:is_admin])
+      group_user = GroupUser.new(group_id: self.id, user_id: member[:id],
+                                              is_admin: member[:is_admin])
+      self.group_users << group_user unless self.group_users.include? group_user
     end
+    self.save!
   end
 
 end

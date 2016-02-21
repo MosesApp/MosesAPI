@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Currency do
-  before { @currency = FactoryGirl.build(:currency) }
+  before { @currency = FactoryGirl.create(:currency) }
   subject { @currency }
 
   #Model
