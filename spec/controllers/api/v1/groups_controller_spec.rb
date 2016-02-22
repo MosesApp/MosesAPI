@@ -112,7 +112,7 @@ describe Api::V1::GroupsController do
         @group_attributes = FactoryGirl.attributes_for :group, :controller do | group |
           #Add group members
           friend = FactoryGirl.create :user
-          group[:members] = [{id: user.id, is_admin: true},
+          group[:add_members] = [{id: user.id, is_admin: true},
                                               {id: friend.id, is_admin: false}]
         end
         post :create, { group: @group_attributes }
@@ -137,7 +137,7 @@ describe Api::V1::GroupsController do
         stub_current_user(user)
         @group_attributes = FactoryGirl.attributes_for :group, :controller
         #Add group members
-        @group_attributes[:members] = [{id: user.id, is_admin: true},
+        @group_attributes[:add_members] = [{id: user.id, is_admin: true},
                                               {id: 12345, is_admin: false}]
         post :create, { group: @group_attributes }
       end
@@ -184,7 +184,7 @@ describe Api::V1::GroupsController do
 
   describe "PUT/PATCH #update" do
 
-    context "when is successfully updated group info" do
+    context "when successfully updated group info" do
       before(:each) do
         stub_access_token(token)
         stub_current_user(user)
@@ -229,6 +229,60 @@ describe Api::V1::GroupsController do
       it { should respond_with 401 }
     end
 
+    context "when is successfully adds group members" do
+      before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
+        #Add group members
+        friend = FactoryGirl.create :user
+        @group_attributes = { add_members: [{id: user.id, is_admin: true},
+                                            {id: friend.id, is_admin: false}] }
+        patch :update, { id: user.groups[0].id, group: @group_attributes }
+      end
+
+      it "renders the json representation for the group with members" do
+        group_response = json_response
+        expect(group_response[:members].size).to eql 2
+      end
+
+      it { should respond_with 200 }
+    end
+
+    context "when successfully removes group members" do
+      before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
+        friend = FactoryGirl.create :user
+        user.groups[0].add_members([{ id: friend.id, is_admin: false }])
+        #Add group members
+        @group_attributes = { remove_members: [{ id: friend.id, is_admin: false }] }
+        patch :update, { id: user.groups[0].id, group: @group_attributes }
+      end
+
+      it "renders the json representation for the group with members" do
+        group_response = json_response
+        expect(group_response[:members].size).to eql 1
+      end
+
+      it { should respond_with 200 }
+    end
+
+    context "when trys to add invalid group member" do
+      before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
+        #Add group members
+        @group_attributes = { add_members: [{id: 12345, is_admin: false}] }
+        patch :update, { id: user.groups[0].id, group: @group_attributes }
+      end
+
+      it "renders an errors json" do
+        group_response = json_response
+        expect(group_response).to have_key(:errors)
+      end
+
+      it { should respond_with 422 }
+    end
   end
 
   describe "DELETE #destroy" do

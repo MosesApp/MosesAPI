@@ -105,6 +105,7 @@ Method |          Endpoint           | Description
 GET    | /groups/                    | Gets all authenticated user's groups
 GET    | /groups/<group_id>          | Gets the group's details
 POST   | /groups/                    | Creates the group
+PATCH  | /groups/                    | Edits the group
 DELETE | /groups/                    | Deletes the group if user is admin
 
 GET /groups response example
@@ -165,12 +166,13 @@ GET /groups/1 response example
 
 POST /groups request example
 ```json
-{ "group":
+{
+  "group":
     {
       "name": "New",
       "creator_id": 1,
       "status": "Active",
-      "members":[
+      "add_members":[
         {
           "id":"1",
           "is_admin":true
@@ -181,6 +183,33 @@ POST /groups request example
         }
       ]
     }
+}
+```
+PATCH /groups/1 request example
+```json
+{
+  "group":
+   {
+     "name": "New",
+     "creator_id": 1,
+     "status": "Active",
+     "add_members":[
+       {
+         "id":"1",
+         "is_admin":true
+       },
+       {
+         "id":"4",
+         "is_admin":false
+       }
+     ],
+     "remove_members":[
+       {
+         "id":"3",
+         "is_admin":true
+       }
+     ]
+   }
 }
 ```
 

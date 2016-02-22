@@ -32,4 +32,15 @@ class Group < ActiveRecord::Base
     end
   end
 
+  ##
+  # Add members to group
+  def remove_members(members)
+    if members != nil
+      members.each do | member |
+        group_user = GroupUser.where(group_id: self.id, user_id: member[:id]).first
+        group_user.destroy unless group_user == nil || group_user.is_admin
+      end
+    end
+  end
+
 end

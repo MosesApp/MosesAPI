@@ -46,4 +46,49 @@ describe Group do
     end
   end
 
+  describe "remove members" do
+    describe "when removes a non admin member" do
+      before(:each) do
+        friend = FactoryGirl.create :user
+        @user = FactoryGirl.create :user
+        @group.add_members([{id: @user.id, is_admin: true},
+                                            {id: friend.id, is_admin: false}])
+        @group.remove_members([{id: friend.id}])
+      end
+
+      it "removes the member" do
+        expect(@group.members.size).to eql 1
+        expect(@group.members[0].id).to eql @user.id
+      end
+    end
+
+    describe "when removes an admin member" do
+      before(:each) do
+        friend = FactoryGirl.create :user
+        user = FactoryGirl.create :user
+        @group.add_members([{id: user.id, is_admin: true},
+                                            {id: friend.id, is_admin: false}])
+        @group.remove_members([{id: user.id}])
+      end
+
+      it "doesn't remove the member" do
+        expect(@group.members.size).to eql 2
+      end
+    end
+
+    describe "when removes a non existing member" do
+      before(:each) do
+        friend = FactoryGirl.create :user
+        user = FactoryGirl.create :user
+        @group.add_members([{id: user.id, is_admin: true},
+                                            {id: friend.id, is_admin: false}])
+        @group.remove_members([{id: 12345}])
+      end
+
+      it "does nothing" do
+        expect(@group.members.size).to eql 2
+      end
+    end
+  end
+
 end
