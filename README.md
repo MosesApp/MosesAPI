@@ -220,9 +220,9 @@ Method |          Endpoint           | Description
 -------|-----------------------------|-------------
 GET    | /bills/                     | Gets all authenticated user's bills
 GET    | /bills/<bill_id>            | Gets the bill's details
-GET    | /groups/<group_id>/bills    | Gets all the group's bills 
+GET    | /groups/<group_id>/bills    | Gets all the group's bills
 
-GET /bills/ ou GET groups/:group_id/bills/response example
+GET /bills/ ou GET groups/<group_id>/bills/ response example
 ```json
 {
   "bills":[
