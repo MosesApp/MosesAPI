@@ -219,9 +219,10 @@ Create, get, edit or remove bill.
 Method |          Endpoint           | Description
 -------|-----------------------------|-------------
 GET    | /bills/                     | Gets all authenticated user's bills
-GET    | /bills/<group_id>           | Gets the bill's details
+GET    | /bills/<bill_id>            | Gets the bill's details
+GET    | /groups/<group_id>/bills    | Gets all the group's bills 
 
-GET /bills/ response example
+GET /bills/ ou GET groups/:group_id/bills/response example
 ```json
 {
   "bills":[

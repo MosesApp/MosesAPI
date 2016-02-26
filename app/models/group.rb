@@ -2,6 +2,7 @@ class Group < ActiveRecord::Base
   #Associations
   belongs_to :creator, class_name: "User"
   has_many :group_users
+  has_many :bills
   has_many :members, through: :group_users, source: :user
   has_attached_file :avatar,
                     styles: { small: "50x50", med: "140x140", large: "200x200" }

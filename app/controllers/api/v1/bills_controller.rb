@@ -15,6 +15,15 @@ class Api::V1::BillsController < ApplicationController
     end
   end
 
+  def group_index
+    group = Group.find(params[:group_id], current_user)
+    if group != nil
+      respond_with group.bills, hide_details: true
+    else
+      render json: { errors: "group not found" }, status: 422
+    end
+  end
+
   private
 
     def bill_params

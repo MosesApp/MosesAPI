@@ -343,6 +343,25 @@ describe Api::V1::GroupsController do
 
       it { should respond_with 401 }
     end
-
   end
+
+  describe "GET #bills" do
+    context "when successfully authenticated" do
+      before(:each) do
+        stub_access_token(token)
+        stub_current_user(user)
+        @group_with_bills = FactoryGirl.create(:group_with_bills, :controller)
+        @group_with_bills.members << user
+        @group_with_bills.save
+        get :bills, { group_id: @group_with_bills.id }
+      end
+
+      it "returns the user's groups" do
+        group_response = json_response
+        print group_response
+        expect(group_response[:groups].size).to eql user.groups.size
+      end
+    end
+  end
+
 end

@@ -24,5 +24,17 @@ FactoryGirl.define do
       end
     end
 
+    factory :group_with_bills do
+      transient do
+        user_count 3
+        bill_count 3
+      end
+
+      after(:create) do |group, evaluator|
+        create_list(:group_user, evaluator.user_count, group: group)
+        create_list(:bill, evaluator.bill_count, group: group)
+      end
+    end
+
   end
 end
